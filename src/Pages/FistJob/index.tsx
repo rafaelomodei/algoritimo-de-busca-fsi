@@ -1,13 +1,14 @@
-import { Card } from '../../components/Card';
-import { svg } from '../../assets';
-import { Container, InfoButtom, InfoTop, Footer } from './styles';
-import { SideNav } from '../../components/SideNav';
+import { Card } from '../../Components/Card';
+import { svg } from '../../Assets';
+import { Container, InfoButtom, InfoTop, ScenaryContainer, Footer } from './styles';
+import { SideNav } from '../../Components/SideNav';
 import { useState } from 'react';
-import { Information } from '../../components/information';
-import { GroundInfo } from '../../components/GroundInfo';
-import { TextBody } from '../../components/TextBody';
-import { Image } from '../../components/Image';
-import { Title } from '../../components/Title';
+import { Information } from '../../Components/Information';
+import { GroundInfo } from '../../Components/GroundInfo';
+import { TextBody } from '../../Components/TextBody';
+import { Image } from '../../Components/Image';
+import { Title } from '../../Components/Title';
+import { Scenary } from '../../Materials/Scenary';
 
 export const FistJob = () => {
   const [isSideNav, setIsSideNav] = useState(false);
@@ -45,23 +46,25 @@ export const FistJob = () => {
           </GroundInfo>
         </Information>
       </SideNav>
-      <InfoTop>
-        <Card img={svg.clock} title={`Tempo de execução`} text={`01:30:20`} />
-      </InfoTop>
+      <header>
+        <InfoTop>
+          <Card img={svg.clock} title={`Tempo de execução`} text={`01:30:20`} />
+        </InfoTop>
+      </header>
+
+      <ScenaryContainer>
+        <Scenary />
+      </ScenaryContainer>
       <Footer>
-          <InfoButtom>
-            <Card
-              img={svg.node}
-              title={`Total de nós expandidos`}
-              text={`350`}
-            />
-            <Card
-              img={svg.heuristic}
-              title={`Heurística`}
-              text={`Algoritmos Guloso`}
-            />
-            <Card img={svg.reward} title={`Total de recompensa`} text={`20`} />
-          </InfoButtom>
+        <InfoButtom>
+          <Card img={svg.node} title={`Total de nós expandidos`} text={`350`} />
+          <Card
+            img={svg.heuristic}
+            title={`Heurística`}
+            text={`Algoritmos Guloso`}
+          />
+          <Card img={svg.reward} title={`Total de recompensa`} text={`20`} />
+        </InfoButtom>
       </Footer>
     </Container>
   );

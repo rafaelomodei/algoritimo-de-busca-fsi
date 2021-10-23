@@ -25,3 +25,8 @@ export const Footer = styled.footer`
   justify-content: center;
   
 `;
+export const ScenaryContainer = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

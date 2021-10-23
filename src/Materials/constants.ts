@@ -1,0 +1,3 @@
+export const VALUEMAXCOINS = 10;
+export const PROBABILITYCREATECOINS = 0.9;
+

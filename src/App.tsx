@@ -1,11 +1,18 @@
 import React from 'react';
-import { FistJob } from './pages/FistJob';
-import { GlobalStyle } from './styles/global';
+import { ScenaryControllerState } from './Materials/ScenaryControllerState';
+import { FistJob } from './Pages/FistJob';
+import { GlobalStyle } from './Styles/global';
 
 function App() {
+
+  const scenary = new ScenaryControllerState();
+
+  scenary.start();
+
   return <>
     <GlobalStyle/>
-    <FistJob/>
+    {/* <FistJob/> */}
+    <h1>Iniciando..</h1>
   </>
 }
 
