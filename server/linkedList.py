@@ -25,11 +25,12 @@ class LinkedList:
         return self._size
     
     def __repr__(self):
-        # head =  str("HEADER: " + str(self.head.data) + "\nTRAILER: " + str(self.trailer.data))
+        head = "HEADER: " +  (self.head and str(self.head.data) or "NULL")
+        head = head + "\nTRAILER: " + (self.trailer and str(self.trailer.data) or "NULL")
         r = ""
 
-        print("HEADER: ", self.head.data)
-        print("TRAILER: ", self.trailer.data)
+        # print("HEADER: ", self.head.data)
+        # print("TRAILER: ", self.trailer.data)
 
         pointer = self.head
         while(pointer):
@@ -37,7 +38,7 @@ class LinkedList:
                 r = r + "\n" + (pointer.prev and str(pointer.prev.data) or "NULL") + " <- " + str(pointer.data) + " -> " + (pointer.next and str(pointer.next.data) or "NULL")
 
             pointer = pointer.next
-        return r
+        return str(head) + r
 
     def __str__(self):
         return self.__repr__()
@@ -55,14 +56,12 @@ class LinkedList:
         currentCell = Cell(cell)
 
         if (self._size):
-            print("append::if")
             # Inserção quando já existe elemento na lista
             self.trailer.next = currentCell
             currentCell.prev = self.trailer
             currentCell.next = None
             self.trailer = currentCell
         else:
-            print("append::else")
             # Primeiro elemento add na lista
             self.head = self.trailer = Cell(cell)
         self._size = self._size + 1
@@ -81,7 +80,6 @@ class LinkedList:
     def insert(self, index, cell):
         currentCell = Cell(cell)
         if (not(self._size)):  # inserindo a celula na primeira posição
-            print("Header Null")
             self.head = currentCell
             self.trailer = currentCell
         elif (index == 0):
@@ -94,7 +92,6 @@ class LinkedList:
             self.append(cell)
             self._size = self._size - 1
         else:
-            print("else")
             pointer = self._getCell(index - 1) # -1 para inserir o elemento antes do index informado
             currentCell.next = pointer.next
             currentCell.prev = pointer
