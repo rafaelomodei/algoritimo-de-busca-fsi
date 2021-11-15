@@ -12,12 +12,12 @@ export class ScenaryGeneratorSatate {
   headerReferenceLine!: Cell;
   
   currentReferenceColumn!: Cell;
+
   currentReferenceLine!: Cell;
 
 
-
-  start(): void {
-    this.spawnScenary(1, 10);
+  start(): void { 
+    this.spawnScenary(1, 2);
   }
 
   spawnScenary(lines: number, columns: number): void {
@@ -25,130 +25,51 @@ export class ScenaryGeneratorSatate {
 
     let index = 0;
 
-    for (let x = 0; x < lines; x++) {
-      for (let y = 0; y < columns; y++) {
+    for (let line = 0; line < lines; line++) {
+      for (let column = 0; column < columns; column++) {
 
         
         const coins = this.createCoins(PROBABILITYCREATECOINS, VALUEMAXCOINS);
-        const currentReference = this.createCell(index, x, y, coins);
+        const currentReference = this.createCell(index, line, column, coins);
 
-        console.log(` --- [${ x } , ${ y }] ---  index: ${index}`);
+        console.log(` --- [${ line } , ${ column }] ---  index: ${index}`);
         console.log('NEW currentReference: ', currentReference);
-
-
-
-
         
-        if(this.referenceMatrix === undefined) {
-            this.referenceMatrix = currentReference;
+        // if(this.referenceMatrix === undefined) {
+        //     this.referenceMatrix = currentReference;
 
-            this.headerReferenceColumn = this.referenceMatrix;
-            this.headerReferenceLine = this.referenceMatrix;
-
-            this.currentReferenceColumn = this.referenceMatrix;
-            this.currentReferenceLine = this.referenceMatrix;
-
-  
-            console.log('-------------------');
-            console.log('CREATE::referenceMatrix: ', this.referenceMatrix);
-            console.log('CREATE::headerReferenceColumn: ', this.headerReferenceColumn);
-            console.log('CREATE::headerReferenceLine: ', this.headerReferenceLine);
-            console.log('CREATE::currentReferenceColumn: ', this.currentReferenceColumn);
-            console.log('CREATE::currentReferenceLine: ', this.currentReferenceLine);
-            console.log('-------------------');
-        }
+        //     console.log('-------------------');
+        //     console.log('CREATE::referenceMatrix: ', this.referenceMatrix);
+        //     console.log('-------------------');
+        // }
 
 
-        currentReference.left = this.currentReferenceColumn.right;
-        this.currentReferenceColumn.right = currentReference;
- 
+        this.currentReferenceColumn = currentReference;
+        this.currentReferenceColumn.right = this.currentReferenceColumn;
 
+        this.headerReferenceLine = this.currentReferenceColumn;
+
+        this.headerReferenceLine.right = this.createCell(100, line, column, coins);
+        this.headerReferenceLine.left = this.createCell(200, line, column, coins);
+
+
+
+
+        // currentReference. left = this.currentReferenceColumn;
 
         console.log('-------------------');
         console.log('currentReference: ', currentReference);
-        console.log('currentReference::left: ', currentReference.left);
-        console.log('currentReference::right: ', currentReference.right);
         console.log('currentReferenceColumn: ', this.currentReferenceColumn);
-        console.log('currentReferenceColumn::left: ', this.currentReferenceColumn.left);
         console.log('currentReferenceColumn::right: ', this.currentReferenceColumn.right);
+        console.log('headerReferenceLine::left: ', this.headerReferenceLine.left);
+        console.log('headerReferenceLine::right: ', this.headerReferenceLine.right);
+        console.log('headerReferenceLine:: ', this.headerReferenceLine);
 
+        // console.log('currentReferenceColumn::left: ', this.currentReferenceColumn.left);
         // console.log('currentReferenceColumn::right: ', this.currentReferenceColumn.right);
-        // console.log('currentReference::left: ', currentReference.left);
-
         console.log('-------------------');
         index++;
 
-
-
-        // else{
-
-        //     if(y === 1){
-        //       this.headerReferenceLine.right = currentReference;
-        //     }
-        //     // if(currentReference.right === this.headerReferenceLine){
-              
-        //     // }
-            
-        //     this.headerReferenceLine.left = currentReference;
-        //     currentReference.left = this.currentReferenceColumn;
-        //     // currentReference.up = this.headerReferenceLine;
-
-        //     currentReference.right = this.headerReferenceLine;
-        //     // currentReference.down = this.headerReferenceColumn;
-
-        //     // this.currentReferenceColumn.right = currentReference;
-        //     // this.currentReferenceLine.up = currentReference;
-
-        //     this.currentReferenceColumn.right = currentReference;
-        //     this.currentReferenceColumn = currentReference;
-
-        //     // this.currentReferenceLine = currentReference;
-            
-        //     // console.log('currentReference::up: ', currentReference.up);
-        //     console.log('currentReference::right: ', currentReference.right);
-        //     // console.log('currentReference::down: ', currentReference.down);
-
-        //     // console.log('currentReferenceColumn::right: ', this.currentReferenceColumn.right);
-        //     console.log('currentReferenceColumn: ', this.currentReferenceColumn);
-        //     console.log('currentReferenceColumn::left: ', this.currentReferenceColumn.left);
-        //     console.log('currentReferenceColumn::right: ', this.currentReferenceColumn.right);
-
-
-
-        //     // console.log('currentReferenceLine::up ', this.currentReferenceLine.up);
-        //     // console.log('currentReferenceLine: ', this.currentReferenceLine);
-
-        //     console.log('headerReferenceLine: ', this.headerReferenceLine);
-        //     console.log('headerReferenceLine::left ', this.headerReferenceLine.left);
-        //     console.log('headerReferenceLine::right ', this.headerReferenceLine.right);
-
-
-
-
-        //     console.log('-------------------');
-  
-        // }
-
-        // if(x > 0){
-        //   currentReference.up = this.currentReferenceLine;
-        //   this.currentReferenceLine.down = currentReference;
-
-        // }
-
-  
-      //   console.log(` --- INICIO - LINES ---  [${ x } , ${ y }] `);
-
-      //   const coins = this.createCoins(PROBABILITYCREATECOINS, VALUEMAXCOINS);
-      //   const currentReference = this.createCell(index, x, y, coins);
-      //   index++;
-
-      //   currentReference.left = this.currentReferenceLine;
-      //   this.currentReferenceLine.right = currentReference;
-      //   this.currentReferenceLine = currentReference;
-      //   console.log('Lines::currentReference: ', currentReference);
-      //   console.log('Lines::currentReferenceLine::right: ', this.currentReferenceLine.right);
-      //   console.log('Lines::currentReferenceLine: ', this.currentReferenceLine);
-      //   console.log(' --- FIM - LINES ---');
 
       }
     }

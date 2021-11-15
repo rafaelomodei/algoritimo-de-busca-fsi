@@ -2,13 +2,15 @@ import { Card } from '../../Components/Card';
 import { svg } from '../../Assets';
 import { Container, InfoButtom, InfoTop, ScenaryContainer, Footer } from './styles';
 import { SideNav } from '../../Components/SideNav';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Information } from '../../Components/Information';
 import { GroundInfo } from '../../Components/GroundInfo';
 import { TextBody } from '../../Components/TextBody';
 import { Image } from '../../Components/Image';
 import { Title } from '../../Components/Title';
 import { Scenary } from '../../Materials/Scenary';
+import api from '../../services/api';
+
 
 export const FistJob = () => {
   const [isSideNav, setIsSideNav] = useState(false);
@@ -16,6 +18,16 @@ export const FistJob = () => {
     console.log(`handleOpenIsSideNav:: ${isSideNav}`);
     setIsSideNav(!isSideNav);
   };
+
+  useEffect(() => {
+    try {
+    
+      api.get('/countries').then(response => console.log(response));
+      
+    } catch (error) {
+      console.log('DEu ruim: ', error);
+    }
+  }, []);
 
   return (
     <Container>
@@ -54,6 +66,7 @@ export const FistJob = () => {
 
       <ScenaryContainer>
         <Scenary />
+        {/* <button onClick={handlerScenary}>Carregar cenario</button> */}
       </ScenaryContainer>
       <Footer>
         <InfoButtom>

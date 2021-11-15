@@ -1,5 +1,4 @@
 import enum
-
 class TypeTerrain(enum.Enum):
     solid = 1
     plain = 1

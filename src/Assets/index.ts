@@ -17,3 +17,4 @@ export const svg = {
   ground_rocky: ground_rocky,
   ground_swamp: ground_swamp,
 };
+

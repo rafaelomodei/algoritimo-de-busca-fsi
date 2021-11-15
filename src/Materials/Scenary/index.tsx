@@ -1,111 +1,112 @@
-import SimplexNoise from 'simplex-noise';
 import React, { useEffect, useRef, useState } from 'react';
 import { sprites } from '../Assets';
-
 import { Container } from './styles';
+import {JavaScript} from './javaScript';
 
-interface ITerrain {
-  sprite: HTMLImageElement;
-  width: number;
-  height: number;
-  positionX: number;
-  positionY: number;
-  render: (x: number, y: number) => void;
-}
+// interface ITerrain {
+//   sprite: HTMLImageElement;
+//   width: number;
+//   height: number;
+//   positionX: number;
+//   positionY: number;
+//   // render: (x: number, y: number) => void;
+// }
 
-interface IstepsTerrain {
-  positionX: number;
-  positionY: number;
-}
+// interface IDrawImage {
+//   sprite: HTMLImageElement;
+//   width: number;
+//   height: number;
+//   positionX: number;
+//   positionY: number;
+// }
+
+// interface IstepsTerrain {
+//   positionX: number;
+//   positionY: number;
+// }
 
 export const Scenary = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
-  const requestRef = useRef<number>(0);
+  // const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+  // const requestRef = React.useRef<number>(0);
+  // const [previousTime, setPreviousTime] = useState(0);
+  // const [count, setCount] = useState(0);
 
-  const spriteTerrain = new Image();
 
-  const stepsTerrain: IstepsTerrain = {
-    positionX: 73 / 2,
-    positionY: 43 / 2,
-  };
+ 
+  // // useEffect(() => {
 
-  const createTerrain = () => {
-    let ctx = canvasCtxRef.current;
+  //   if (canvasRef.current) {
+  //     canvasCtxRef.current = canvasRef.current.getContext('2d');
+  //   }
+  
+  //   const ctx = canvasCtxRef.current;
+  //   const spriteTerrain = new Image();
+  //   spriteTerrain.src = sprites.ground_rocky;
 
-    const randonTerrain = (value: number) => {
-      value <= 0.2
-        ? (spriteTerrain.src = sprites.ground_wood)
-        : value > 0.2 && value <= 0.4
-        ? (spriteTerrain.src = sprites.ground_sandy)
-        : value > 0.4 && value <= 0.6
-        ? (spriteTerrain.src = sprites.ground_rocky)
-        : (spriteTerrain.src = sprites.ground_swamp);
-      return spriteTerrain;
-    };
+  //   if (ctx) {
+  //     console.log('Boara caralho!!');
+  //     console.log('width: ', spriteTerrain.width)
+  //     console.log('height: ', spriteTerrain.height)
+  //     console.log('spriteTerrain: ', spriteTerrain)
 
-    const simplex = new SimplexNoise();
-    const value = simplex.noise2D(Math.random() / 6, Math.random() / 6);
-    let spriteR = randonTerrain(value);
 
-    const terrain: ITerrain = {
-      sprite: spriteR,
-      width: spriteTerrain.width,
-      height: spriteTerrain.height,
-      positionX: 0,
-      positionY: 0,
-      render: (x, y) => {
-        ctx!.drawImage(
-          terrain.sprite,
-          terrain.positionX + terrain.positionX * x,
-          terrain.positionY + terrain.positionY * y,
-          terrain.width,
-          terrain.height
-        );
-      },
-    };
-  };
+  //     ctx!.drawImage(
+  //       spriteTerrain,
+  //       50,
+  //       50,
+  //       50,
+  //       50,
+  //     );
+  //   }
+  //   console.log('CTX Não existe');
 
-  const useAnimationFrame = (callback: Function) => {
-    // Use useRef for mutable variables that we want to persist
-    // without triggering a re-render on their change
-    const requestRef = useRef<number>(0);
-    const previousTimeRef = useRef<number>();
-    /**
-     * The callback function is automatically passed a timestamp indicating
-     * the precise time requestAnimationFrame() was called.
-     */
+  // // }, []);
 
-      useEffect(() => {
-      const animate = (time: number) => {
-        if (previousTimeRef.current !== undefined) {
-          const deltaTime = time - previousTimeRef.current;
-          callback(deltaTime);
-        }
-        previousTimeRef.current = time;
-        requestRef.current = requestAnimationFrame(animate);
-      };
-      requestRef.current = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(requestRef.current);
-    }, []); // Make sure the effect runs only once
-  };
+  // useEffect(() => {
+  //   console.log(previousTime)
 
-  const [count, setCount] = useState(0);
+  // },[previousTime])
 
-  useAnimationFrame((deltaTime: number) => {
+  // const animate = (time: number) => {
 
-    if (canvasRef.current) {
-      canvasCtxRef.current = canvasRef.current.getContext('2d');
-      createTerrain();
-    }
+  //   if (canvasRef.current) {
+  //     canvasCtxRef.current = canvasRef.current.getContext('2d');
+  //   }
 
-    setCount(prevCount => (prevCount + deltaTime * 0.001) % 100);
-  });
+  //   const spriteTerrain = new Image();
+  //   spriteTerrain.src = sprites.ground_rocky;
+
+  //   const ctx = canvasCtxRef.current;
+  //   if(previousTime != 0){
+  //     const deltaTime = time - previousTime;
+  //     setCount(prevCount => (prevCount + deltaTime * 0.00001) % 100);
+  //     if (ctx) {
+  //       ctx.clearRect(0, 0, 300, 300);
+
+  //       ctx!.drawImage(
+  //           spriteTerrain,
+  //           count,
+  //           10,
+           
+  //         );
+  //     }
+  //   }
+  //   setPreviousTime(time)
+  //   requestRef.current = requestAnimationFrame(animate);
+  // }
+
+  // useEffect(() => {
+  //   requestRef.current = requestAnimationFrame(animate);
+  //   return () => cancelAnimationFrame(requestRef.current);
+  
+  // }, []); 
 
   return (
     <Container>
-      {count}
-      <canvas ref={canvasRef}></canvas>
+      {/* <button onClick={() => setRender(render!)}>Renderizar</button> */}
+      {/* <canvas ref={canvasRef}></canvas> */}
+      <JavaScript/>
     </Container>
   );
 };

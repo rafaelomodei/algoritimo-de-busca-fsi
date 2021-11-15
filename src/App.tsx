@@ -11,8 +11,8 @@ function App() {
 
   return <>
     <GlobalStyle/>
-    {/* <FistJob/> */}
-    <h1>Iniciando..</h1>
+    <FistJob/>
+    {/* <h1>Iniciando..</h1> */}
   </>
 }
 
