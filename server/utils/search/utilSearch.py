@@ -37,3 +37,13 @@ def cellMinDistanceAndCost(queue: list, cellGoal: Cell) -> Cell:
             cellShortDistance = cell
 
     return cellShortDistance
+
+def maxSizeOfListCellNeighbors(currentValue: int,  sizeListCellNeighbors: int):
+    if(currentValue < sizeListCellNeighbors):
+        return sizeListCellNeighbors
+    return currentValue
+
+def printlListCell(listCell: list) -> None:
+    if(listCell):
+        for cell in listCell:
+                print(', ', cell.data, end="")

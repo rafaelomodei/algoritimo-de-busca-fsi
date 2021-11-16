@@ -1,10 +1,12 @@
-from utils.search.utilSearch import isGoal, cellMinDistanceAndCost
 from cell import Cell
+from terrain import TypeTerrain
+from utils.search.utilSearch import isGoal, cellMinDistanceAndCost, maxSizeOfListCellNeighbors, printlListCell
 
 def aStarSearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and list and None:
     """Calcula a menor rota com o menor custo"""
 
     punishment: float = 0
+    maxSizeOfNeighbors: int = 0
     listCellVisiteds: list[Cell] = list()
     listCellNeighbors: list[Cell] = list()
 
@@ -23,27 +25,30 @@ def aStarSearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and lis
     while listCellNeighbors:
 
         currentCell = cellMinDistanceAndCost(listCellNeighbors, goalCell)
+        maxSizeOfNeighbors = maxSizeOfListCellNeighbors(maxSizeOfNeighbors, len(listCellNeighbors))
         print('------')
-        print('Celula com menor distancia: ', currentCell.data)
-        print('celula atual: ', currentCell.data)
-        print('Tamanho dos visitados: ', len(listCellVisiteds))
+        print('Celula com menor distancia e menor custo: ', currentCell.data)
+        print('Celula atual: ', currentCell.data)
+        print('Tamanho da lista das celulas visitadas: ', len(listCellVisiteds))
+        print('Tamanho da lista das celulas visinhas: ', maxSizeOfNeighbors)
 
-        if (currentCell not in listCellVisiteds):
-            punishment = punishment + currentCell.terrain.value
-            listCellVisiteds.append(currentCell)
-            listCellNeighbors.extend((set(graph[currentCell]) - set(listCellVisiteds)))
-    
-            if (isGoal(currentCell, goalCell)):
-                return punishment, listCellVisiteds
 
-        print('Visitados: ', end="")
-        for visitedCell in listCellVisiteds:
-            print(', ', visitedCell.data, end="")
+        if (currentCell.terrain != TypeTerrain.wall):
+            if (currentCell not in listCellVisiteds):
+                punishment = punishment + currentCell.terrain.value
+                listCellVisiteds.append(currentCell)
+                listCellNeighbors.extend((set(graph[currentCell]) - set(listCellVisiteds)))
         
-        print('\nMELHHORES - List: ', end="")
-        for neighborCell in listCellNeighbors:
-            print(', ', neighborCell.data, end="")
-        print(' ')
+                if (isGoal(currentCell, goalCell)):
+                    return punishment, maxSizeOfNeighbors, listCellVisiteds
+
+        print('Lista de celulas VISITADAS: ', end="")
+        printlListCell(listCellVisiteds)
+        
+        
+        print('\nLista de celulas VISINHAS: ', end="")
+        printlListCell(listCellNeighbors)
+        print('')
         print('É o objetivo ? : ', (isGoal(currentCell, goalCell)) and 'Sim' or 'Não')
 
         for cell in listCellNeighbors:
@@ -51,4 +56,4 @@ def aStarSearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and lis
                 listCellNeighbors.remove(cell)
                 print('Removido!! ', cell.data)
 
-    return punishment, None
+    return punishment, maxSizeOfNeighbors, None

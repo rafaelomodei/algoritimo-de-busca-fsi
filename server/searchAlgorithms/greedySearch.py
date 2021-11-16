@@ -1,10 +1,12 @@
-from utils.search.utilSearch import isGoal, cellMinDistance
 from cell import Cell
+from terrain import TypeTerrain
+from utils.search.utilSearch import isGoal, cellMinDistance, maxSizeOfListCellNeighbors, printlListCell
 
 def greedySearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and list and None:
     """Calcula a rota com o menor caminho"""
 
     punishment: float = 0
+    maxSizeOfNeighbors: int = 0
     listCellVisiteds: list[Cell] = list()
     listCellNeighbors: list[Cell] = list()
 
@@ -23,27 +25,29 @@ def greedySearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and li
     while listCellNeighbors:
 
         currentCell = cellMinDistance(listCellNeighbors, goalCell)
+        maxSizeOfNeighbors = maxSizeOfListCellNeighbors(maxSizeOfNeighbors, len(listCellNeighbors))
         print('------')
         print('Celula com menor distancia: ', currentCell.data)
         print('celula atual: ', currentCell.data)
-        print('Tamanho dos visitados: ', len(listCellVisiteds))
+        print('Tamanho da lista das celulas visitadas: ', len(listCellVisiteds))
+        print('Tamanho da lista das celulas visinhas: ', maxSizeOfNeighbors)
 
-        if (currentCell not in listCellVisiteds):
-            punishment = punishment + currentCell.terrain.value
-            listCellVisiteds.append(currentCell)
-            listCellNeighbors.extend((set(graph[currentCell]) - set(listCellVisiteds)))
+        if (currentCell.terrain != TypeTerrain.wall):
+            if (currentCell not in listCellVisiteds):
+                punishment = punishment + currentCell.terrain.value
+                listCellVisiteds.append(currentCell)
+                listCellNeighbors.extend((set(graph[currentCell]) - set(listCellVisiteds)))
 
-            if (isGoal(currentCell, goalCell)):
-                return punishment, listCellVisiteds
+                if (isGoal(currentCell, goalCell)):
+                    return punishment, maxSizeOfNeighbors, listCellVisiteds
         
-        print('Visitados: ', end="")
-        for visitedCell in listCellVisiteds:
-            print(', ', visitedCell.data, end="")
+        print('Lista de celulas VISITADAS: ', end="")
+        printlListCell(listCellVisiteds)
         
-        print('\nMELHHORES - List: ', end="")
-        for neighborCell in listCellNeighbors:
-            print(', ', neighborCell.data, end="")
+        print('\nLista de celulas VISINHAS: ', end="")
+        printlListCell(listCellNeighbors)
         print(' ')
+        
         print('É o objetivo ? : ', (isGoal(currentCell, goalCell)) and 'Sim' or 'Não')
 
         for cell in listCellNeighbors:
@@ -51,4 +55,4 @@ def greedySearch(graph: dict, initialCell: Cell, goalCell: Cell) -> float and li
                 listCellNeighbors.remove(cell)
                 print('Removido!! ', cell.data)
 
-    return punishment, None
+    return punishment, maxSizeOfNeighbors, None
